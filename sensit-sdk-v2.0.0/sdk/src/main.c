@@ -23,6 +23,10 @@
 u8 firmware_version[] = "TEMPLATE";
 
 /*******************************************************************/
+typedef struct
+{
+    u8 EVENT_ID : 4;
+} data_s;
 
 int main()
 {
@@ -120,7 +124,15 @@ int main()
         {
 
             /* Send the message */
-            err = RADIO_API_send_message(RGB_MAGENTA, (u8 *)"HI", 2, FALSE, NULL);
+            // err = RADIO_API_send_message(RGB_MAGENTA, (u8 *)"HI", 2, FALSE, NULL);
+            /* Parse the error code */
+            // ERROR_parser(err);
+
+            data_s data = {0};
+            data.EVENT_ID = 0b0001;
+
+            /* Send the message */
+            err = RADIO_API_send_message(RGB_MAGENTA, (u8 *)&data, sizeof(data), FALSE, NULL);
             /* Parse the error code */
             ERROR_parser(err);
 
